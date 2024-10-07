@@ -1,16 +1,22 @@
 import { Navigator } from "@/app/components";
 import { routeConst } from "../constants";
 
-export default function AuthLayout() {
+interface Props {
+  children: React.ReactNode
+}
+
+export default function AuthLayout({ children }: Props) {
   return (
     <>
-      <Navigator
-        className="flex gap-3 justify-end w-full fixed top-0 left-0"
-        paths={[routeConst.SIGN_IN, routeConst.REGISTER]}
-      />
+      <div className="fixed top-0 left-0 w-full">
+        <Navigator
+          className="flex gap-2 justify-end px-4 py-2"
+          paths={[routeConst.SIGN_IN, routeConst.REGISTER]}
+        />
+      </div>
 
-      <main className="mt-16">
-
+      <main className="mt-12 max-w-[1280px] m-auto p-4">
+        {children}
       </main>
     </>
   )

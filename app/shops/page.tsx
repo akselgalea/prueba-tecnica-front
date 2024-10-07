@@ -1,10 +1,9 @@
 import Link from "next/link"
-import { getShops } from "./actions"
-import { routeConst } from "./constants"
-import { StoreSvg } from "./components/svg/store.svg"
-import { ErrorCompoent } from "./components"
+import { getShops } from "../actions"
+import { routeConst } from "../constants"
+import { ErrorCompoent, StoreSvg } from "../components"
 
-export default async function Home() {
+export default async function ShopsPage() {
   const shops = await getShops()
 
   if (shops.statusCode) {

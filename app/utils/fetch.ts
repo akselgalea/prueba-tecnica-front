@@ -10,7 +10,7 @@ export enum HttpMethods {
 }
 export async function useFetch<T>(
 	url: string,
-	method: HttpMethods,
+	method: HttpMethods = HttpMethods.Get,
 	data?: unknown,
 ): Promise<T> {
 	const cs = cookies();

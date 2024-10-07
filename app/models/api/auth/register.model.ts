@@ -1,9 +1,9 @@
 import type { ErrorResponse } from "../error.model";
 import type { User } from "./user.model";
 
-export interface RegisterApiOK {
+export interface SignInApiOK {
 	access_token: string;
 	user: User;
 }
 
-export type RegisterApiResponse = RegisterApiOK & Partial<ErrorResponse>;
+export type SignInApiResponse = SignInApiOK & Partial<ErrorResponse>;

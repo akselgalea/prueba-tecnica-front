@@ -19,4 +19,14 @@ export const routeConst = {
 		name: "register",
 		path: "/auth/register",
 	},
+	ADMIN: {
+		DASHBOARD: {
+			name: "dashboard",
+			path: "/admin/dashboard",
+		},
+		PRODUCTS: {
+			name: "products",
+			path: "/admin/products",
+		},
+	},
 };

@@ -1,26 +1,23 @@
 'use client'
-
 import { Field, Form, Formik, ErrorMessage } from "formik"
-import { signIn } from "../actions/signin"
-import { useSearchParams } from "next/navigation"
+import { register } from "../actions"
 import { routeConst } from "@/app/constants"
 
-export default function SignInPage() {
-  const searchParams = useSearchParams()
-  const redirectUrl = searchParams.get('redirectUrl')
-
+export default function RegisterPage() {
   return (
     <Formik
-      initialValues={{ email: '', password: '' }}
-      onSubmit={(values, { setErrors, setSubmitting }) => signIn(values).then((res) => {
+      initialValues={{ name: '', username: '', email: '', password: '' }}
+      onSubmit={(values, { setErrors, setSubmitting }) => register(values).then((res) => {
         console.log({ ...res })
         setErrors({
+          name: res.errors?.name?.[0],
+          username: res.errors?.username?.[0],
           email: res.errors?.email?.[0],
-          password: res.errors?.password?.[0]
+          password: res.errors?.password?.[0],
         })
 
         if (res.user) {
-          window.location.href = redirectUrl || routeConst.HOME.path
+          window.location.href = routeConst.HOME.path
         }
 
         setSubmitting(false)
@@ -29,6 +26,28 @@ export default function SignInPage() {
       {
         ({ values, isSubmitting }) => (
           <Form className="grid grid-cols-1 gap-3">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="name" className="font-semibold">Full name</label>
+              <Field
+                type="text"
+                name="name"
+                value={values.name}
+                className="bg-slate-800 rounded p-1"
+              />
+              <ErrorMessage name="name" component="div" />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="username" className="font-semibold">Username</label>
+              <Field
+                type="text"
+                name="username"
+                value={values.username}
+                className="bg-slate-800 rounded p-1"
+              />
+              <ErrorMessage name="username" component="div" />
+            </div>
+
             <div className="flex flex-col gap-2">
               <label htmlFor="email" className="font-semibold">Email</label>
               <Field
@@ -39,11 +58,13 @@ export default function SignInPage() {
               />
               <ErrorMessage name="email" component="div" />
             </div>
+
             <div className="flex flex-col gap-2">
               <label htmlFor="password" className="font-semibold">Password</label>
               <Field type="password" name="password" value={values.password} className="bg-slate-800 rounded p-1" />
               <ErrorMessage name="password" component="div" />
             </div>
+
             <button
               className="rounded bg-white text-black w-fit px-6 py-2 mt-3"
               type="submit"

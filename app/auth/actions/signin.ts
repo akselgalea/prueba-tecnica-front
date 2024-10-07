@@ -36,13 +36,25 @@ export async function signIn(values: unknown) {
 
 		const cs = cookies();
 
+		if (response.statusCode) {
+			return { errors: {}, message: "Invalid credentials" };
+		}
+
 		const { access_token, user } = response;
 
 		cs.set("token", access_token);
 		cs.set("user", JSON.stringify(user));
-		return redirect(routeConst.HOME.path);
+
+		return {
+			errors: { email: [], password: [] },
+			message: "User logged in successfully",
+			user,
+		};
 	} catch (err) {
 		console.log(err);
-		return { errors: {}, message: "Something went wrong" };
+		return {
+			errors: { email: [], password: [] },
+			message: "Something went wrong",
+		};
 	}
 }
